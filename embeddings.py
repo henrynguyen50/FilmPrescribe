@@ -3,6 +3,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import joblib
 import ast
+import plotly.express as px
 
 df = pd.read_csv("movies.csv")
 
@@ -20,6 +21,7 @@ df['parsed_genres'] = df['genres'].apply(parsed_genres)
 df['metadata'] = df['title'].fillna('') + ". " + df['parsed_genres'].fillna('') + ". " + df['overview'].fillna('')
 
 #load embedding model
+print(df['metadata'].head())
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -27,7 +29,6 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 print("Making embeddings")
 embeddings = model.encode(df['metadata'].tolist(), show_progress_bar = True)
 
-#save to disk
 #save embeddings then dataframe 
 np.save("movie_embeddings.npy", embeddings)
 joblib.dump(df, "movie_metadata.pkl")
