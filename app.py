@@ -38,28 +38,32 @@ def recommend():
     
     #covert scores from tensor to a numpy array
     scores_np = scores.cpu().numpy()
-   
-    #get top 5 movies or if less than 5 get len of array
-    top_k = min(5, scores_np.shape[0])
-    if top_k == 0:
-        return jsonify({"error": "No scores found"}), 400
+
+    #get top 20 movies first
+    top_n = 20
     
     #top movies is just indexes 
-    #get top_k last elements
+    #get top_n last elements
     #argsort just gets indexes
-    top_movies = np.argsort(scores_np)[-top_k:]
-    print(top_movies)
-    results = []
-
+    top_movies = np.argsort(scores_np)[-top_n:]
+    
+    candidates = []
     #use iloc to get indexes
     for idx in top_movies:
-        results.append({
+        candidates.append({
             "title": df.iloc[idx]['title'],
-            "genres": df.iloc[idx]['parsed_genres'],  
+            "genres": df.iloc[idx]['genres'],  
             "overview": df.iloc[idx]['overview'],
+            "release date": df.iloc[idx]['release_date'],
+            "popularity": df.iloc[idx]['popularity'],
             "score": round(float(scores[idx]), 4)  
         })
+    #now sort by popularity to filter out the bad movies and get top 5 results
+    candidates.sort(key=lambda i: i["popularity"], reverse=True)
+    top_k = 5
+    results = candidates[:top_k]
+    
     return jsonify(results)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
