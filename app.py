@@ -30,7 +30,7 @@ def recommend():
 
     #now use cosine similarity to get closest movies
     
-    scores = util.cos_sim(query_embedding, embeddings)[0] #remove the query number so only have tensor scores 
+    scores = util.cos_sim(query_embedding, embeddings)[0] #[0] to remove the query number so only have tensor scores 
     
     #check if doesnt exist
     if scores is None or scores.numel() == 0:

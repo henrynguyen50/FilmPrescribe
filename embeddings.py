@@ -5,21 +5,14 @@ import joblib
 import ast
 import plotly.express as px
 
-df = pd.read_csv("movies.csv")
+df = pd.read_csv("topmovies.csv")
 
-def parsed_genres(genre_str):
-    try:
-        genres = ast.literal_eval(genre_str) #convert csv to pyhton literal
-        return " ".join([g['name'] for g in genres])
-    except Exception:
-        return ""
-    
-#make new col for the extracted genres
-df['parsed_genres'] = df['genres'].apply(parsed_genres)
+#only grab relevant columns
+df_subset = df[["title", "genres", "keywords", "overview"]]
+#fill in missing cols
+df_subset = df_subset.fillna("")
 
-#now combine the titles, genres, and small overview of movies
-df['metadata'] = df['title'].fillna('') + ". " + df['parsed_genres'].fillna('') + ". " + df['overview'].fillna('')
-
+df_subset["metadata"] = df_subset["title"] + " " + df_subset["overview"] + " " + df_subset["genres"] + " " + df_subset["keywords"]
 #load embedding model
 print(df['metadata'].head())
 
