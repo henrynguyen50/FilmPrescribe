@@ -5,14 +5,14 @@ import joblib
 import ast
 import plotly.express as px
 
-df = pd.read_csv("topmovies.csv")
+df = pd.read_csv("TMDBMovieData.csv")
 
 #only grab relevant columns
-df_subset = df[["title", "genres", "keywords", "overview", "release_date"]]
+df_subset = df[["original_title", "genres", "keywords", "tagline", "overview", "release_date","poster_path","vote_average","popularity"]]
 #fill in missing cols
 df_subset = df_subset.fillna("")
 
-df_subset["metadata"] = df_subset["title"] + " " + df_subset["overview"] + " " + df_subset["genres"] + " " + df_subset["keywords"]
+df_subset["metadata"] = df_subset["original_title"] + " " + df_subset["overview"] + " " + df_subset["genres"] + " " + df_subset["keywords"] + " " + df_subset["tagline"]
 #load embedding model
 print(df_subset["metadata"].head())
 
