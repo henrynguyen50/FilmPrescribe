@@ -1,10 +1,14 @@
-#api for embeddings using flask
-from flask import Flask, request, jsonify
+from fastapi import FastAPI, Request
+from pydantic import BaseModel #like requests from flask
 import numpy as np
 import joblib
 from sentence_transformers import SentenceTransformer, util
 
-app = Flask(__name__)
+app = FastAPI()
+
+#convert the JSON query to a string
+class QueryRequest(BaseModel):
+    query: str
 
 print("load models")
 model = SentenceTransformer('all-MiniLM-L6-v2') #make model
@@ -13,17 +17,16 @@ df = joblib.load("movie_metadata.pkl") #load movie metadata using pandas
 
 #first api request POST, send user input
 
-@app.route('/')
+@app.get("/")
 def home():
-    return "Hello! This is the home page."
+    return {"message": "Hello! This is the home page."}
 
-@app.route('/recommend', methods = ["POST"])
-def recommend():
-    data = request.get_json() #convert request to json
-    query = data.get("query", "").strip()
+@app.post("/recommend")
+def recommend(request: QueryRequest): #request is the query
+    query = request.query.strip()
 
     if not query:
-        return jsonify({"error": "Query is required"}), 400
+        return ({"error": "Query is required"}), 400
 
     #encode query using model
     query_embedding = model.encode(query)
@@ -34,7 +37,7 @@ def recommend():
     
     #check if doesnt exist
     if scores is None or scores.numel() == 0:
-        return jsonify({"error": "No scores"}), 400
+        return ({"error": "No scores"}), 400
     
     #covert scores from tensor to a numpy array
     scores_np = scores.cpu().numpy()
@@ -51,11 +54,12 @@ def recommend():
     #use iloc to get indexes
     for idx in top_movies:
         candidates.append({
-            "title": df.iloc[idx]['title'],
+            "title": df.iloc[idx]['original_title'],
             "genres": df.iloc[idx]['genres'],  
             "overview": df.iloc[idx]['overview'],
             "release date": df.iloc[idx]['release_date'],
             "popularity": df.iloc[idx]['popularity'],
+            "vote_average": df.iloc[idx]['vote_average'],
             "score": round(float(scores[idx]), 4)  
         })
     #now sort by popularity to filter out the bad movies and get top 5 results
@@ -63,7 +67,6 @@ def recommend():
     top_k = 5
     results = candidates[:top_k]
     
-    return jsonify(results)
+    return results
 
-if __name__ == "__main__":
-    app.run(debug=False)
+#to run do uvicorn app:app --reload , dont use reload if testing test cases
