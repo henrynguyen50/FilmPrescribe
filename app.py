@@ -60,6 +60,7 @@ def recommend(request: QueryRequest): #request is the query
             "release date": df.iloc[idx]['release_date'],
             "popularity": df.iloc[idx]['popularity'],
             "vote_average": df.iloc[idx]['vote_average'],
+            "poster_path": df.iloc[idx]['poster_path'],
             "score": round(float(scores[idx]), 4)  
         })
     #now sort by popularity to filter out the bad movies and get top 5 results
