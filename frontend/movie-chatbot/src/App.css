@@ -1,0 +1,490 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  width: 100vw; /* Ensure full viewport width */
+  background: linear-gradient(135deg, #1f2937 0%, #7c3aed 50%, #1f2937 100%);
+  color: white;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+
+}
+
+.container {
+  /* Fixed centering and width issues */
+  width: 100%;
+  max-width: 100vw; 
+  margin: 0 auto; /* Center the container */
+  padding: 0rem 4rem; /* Reduced horizontal padding */
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  width: 100%;
+}
+
+.header h1 {
+
+  font-size: 2rem; /* Reduced from 4rem */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.header p {
+  color: #d1d5db;
+  font-size: 1.2rem;
+}
+
+/* Chat Container */
+.chat-container {
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1rem; /* Reduced padding */
+  margin-bottom: 1rem;
+  max-height: 475px;
+  min-height: 475px;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.message {
+  display: flex;
+  width: 100%;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.bot {
+  justify-content: flex-start;
+}
+
+.message-content {
+  max-width: 85%;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.message.user .message-content {
+  background: #7c3aed;
+}
+
+.message.bot .message-content {
+  background: #374151;
+}
+
+.message-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Movie Grid - Fixed for proper display */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr)); /* Auto-fit for flexibility */
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+
+
+.movie-card {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.movie-card:hover {
+  box-shadow: 
+    0 0 30px rgba(124, 58, 237, 0.8),
+    0 0 60px rgba(124, 58, 237, 0.6),
+    0 0 90px rgba(124, 58, 237, 0.4),
+    0 15px 35px rgba(0, 0, 0, 0.4);
+  border: 3px solid #a855f7;
+  background: #374151;
+}
+
+.movie-poster {
+  position: relative;
+  width: 100%;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 200px; /* Adjusted height */
+  object-fit: contain;
+  display: block;
+}
+
+.rating {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.rating svg {
+  color: #fbbf24;
+  width: 14px;
+  height: 14px;
+}
+
+.movie-info {
+  padding: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.movie-info h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  min-height: 2.5rem;
+}
+
+.movie-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-item svg {
+  width: 14px;
+  height: 14px;
+}
+
+.genres {
+  margin-bottom: 1rem;
+}
+
+.genre-badge {
+  background: #374151;
+  color: #d1d5db;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.overview {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: 4rem;
+}
+
+.streaming-links {
+  margin-bottom: 1rem;
+}
+
+.watch-label {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.streaming-btn {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.streaming-btn:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+}
+
+.streaming-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.match-score {
+  padding-top: 1rem;
+  border-top: 1px solid #374151;
+  font-size: 0.8rem;
+  color: #a855f7;
+  font-weight: 600;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loading span {
+  font-size: 1rem;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #374151;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Input Form */
+.input-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.message-input {
+  flex: 1;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.message-input::placeholder {
+  color: #9ca3af;
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.send-btn {
+  background: #7c3aed;
+  border: none;
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-width: 60px;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: #6d28d9;
+  transform: translateY(-1px);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.send-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Examples */
+.examples {
+  text-align: center;
+  width: 100%;
+}
+
+.examples p {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.example-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.example-btn {
+  background: #1f2937;
+  border: 1px solid #4b5563;
+  color: #d1d5db;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.example-btn:hover:not(:disabled) {
+  background: #374151;
+  transform: translateY(-1px);
+}
+
+.example-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.5rem;
+    max-width: 100%;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .chat-container {
+    padding: 1.5rem;
+    max-height: 60vh;
+    margin: 0 0.5rem 1.5rem 0.5rem;
+  }
+
+  .message-content {
+    max-width: 95%;
+    padding: 1rem;
+  }
+
+  .message-content p {
+    font-size: 1rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .movie-poster img {
+    height: 200px;
+  }
+
+  .movie-info {
+    padding: 1rem;
+  }
+
+  .movie-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .example-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .example-btn {
+    width: 250px;
+  }
+
+  .input-form {
+    gap: 0.5rem;
+    margin: 0 0.5rem 1rem 0.5rem;
+  }
+
+  .message-input {
+    padding: 0.75rem;
+  }
+
+  .send-btn {
+    padding: 0.75rem;
+  }
+}
+
+/* Ensure no horizontal overflow */
+.app,
+.container,
+.chat-container,
+.message-content,
+.movie-grid {
+  max-width: 100%;
+  overflow-x: hidden;
+}

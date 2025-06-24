@@ -6,15 +6,18 @@ from sentence_transformers import SentenceTransformer, util
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = ["https://localhost",
-           "https://localhost:8000"]
+           "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000"]
 app = FastAPI()
+#frontend sends a preflight security check OPTIONS request need to 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"],  # Added Vite default port
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+
 #convert the JSON query to a string
 class QueryRequest(BaseModel):
     query: str
@@ -35,7 +38,7 @@ def recommend(request: QueryRequest): #request is the query
     query = request.query.strip()
 
     if not query:
-        return ({"error": "Query is required"}), 400
+        return {"error": "Query is required"}, 400
 
     #encode query using model
     query_embedding = model.encode(query)
