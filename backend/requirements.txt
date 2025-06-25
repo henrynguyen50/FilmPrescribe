@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-sentence-tranformers
+sentence-transformers
 numpy
 joblib
 pydantic
