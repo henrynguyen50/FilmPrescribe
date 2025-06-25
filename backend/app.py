@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 from sentence_transformers import SentenceTransformer, util
 from fastapi.middleware.cors import CORSMiddleware
-from ratelimiter import RateLimiter
+from backend.ratelimiter import RateLimiter
 
 origins = ["https://localhost",
            "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000"]
