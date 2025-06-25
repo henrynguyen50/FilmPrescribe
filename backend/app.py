@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from pydantic import BaseModel #like requests from flask
 import numpy as np
 import joblib
 from sentence_transformers import SentenceTransformer, util
 from fastapi.middleware.cors import CORSMiddleware
+from ratelimiter import RateLimiter
 
 origins = ["https://localhost",
            "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000"]
@@ -33,7 +34,7 @@ df = joblib.load("models/movie_metadata.pkl") #load movie metadata using pandas
 def home():
     return {"message": "Hello! This is the home page."}
 
-@app.post("/recommend")
+@app.post("/recommend", dependencies=[Depends(RateLimiter(requests_limit = 10, time_window=60))])
 def recommend(request: QueryRequest): #request is the query
     query = request.query.strip()
 
