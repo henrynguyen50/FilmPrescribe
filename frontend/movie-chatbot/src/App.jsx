@@ -212,10 +212,10 @@ function App() {
         <div className="examples">
           <div className="example-buttons">
             {[
-              "Cult classics like Fight Club",
+              "Fight Club",
               "Lonely movies like Bladerunner 2049",
-              "Stylish thrillers like Drive",
-              "Tarantino classics like Pulp Fiction",
+              "Drive, heist",
+              "Pulp Fiction",
             ].map((example, index) => (
               <button key={index} className="example-btn" onClick={() => setInput(example)} disabled={isLoading}>
                 {example}
