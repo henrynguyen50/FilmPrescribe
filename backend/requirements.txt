@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sentence-tranformers
+numpy
+joblib
+pydantic
