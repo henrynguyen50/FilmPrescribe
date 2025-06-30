@@ -75,11 +75,11 @@ body {
   display: flex;
   width: 100%;
 }
-
+/*moves user messages to right*/
 .message.user {
   justify-content: flex-end;
 }
-
+/*moves bot messages to left*/
 .message.bot {
   justify-content: flex-start;
 }

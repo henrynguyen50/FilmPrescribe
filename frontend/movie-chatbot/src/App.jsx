@@ -16,18 +16,18 @@ function App() {
     },
   ])
   const [input, setInput] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false) //use to prevent clicking during loading 
 
   const messagesEndRef = useRef(null)
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
+    e.preventDefault() //prevent browser refresh
+    if (!input.trim() || isLoading) return //dont perform if laoding or no input
 
     const userMessage = input.trim()
-    setInput("")
+    setInput("") //clear input after user submits 
 
-    // Add user message
+    // Add user message, use prev state to prevent some messages not going through on doubel clicks 
     setMessages((prev) => [...prev, { type: "user", content: userMessage }])
     setIsLoading(true)
 
@@ -71,6 +71,7 @@ function App() {
   const getStreamingLinks = (title) => {
     return [
       { name: "XPrime.tv", url: `https://xprime.tv/search?query=${encodeURIComponent(title)}` },
+      { name: "Mapple.tv", url: `https://mapple.tv/search?q=${encodeURIComponent(title)}`},
       { name: "Netflix", url: `https://www.netflix.com/search?q=${encodeURIComponent(title)}` },
       { name: "Prime Video", url: `https://www.amazon.com/s?k=${encodeURIComponent(title)}&i=prime-video` },
       { name: "Hulu", url: `https://www.hulu.com/search?q=${encodeURIComponent(title)}` },
@@ -98,14 +99,14 @@ function App() {
         {/* Header */}
         <div className="header">
           <h1>Film Prescriber</h1>
-          <p>Discover your next favorite movie with AI-powered recommendations</p>
+          <p>Discover your next favorite movie with Embedding-powered recommendations</p>
         </div>
 
         {/* Chat Messages */}
         <div className="chat-container">
           <div className="messages">
             {messages.map((message, index) => (
-              <div key={index} className={`message ${message.type}`}>
+              <div key={index} className={`message ${message.type}`}> {/* index needed here to be able to update messages, also discerns if bot or user message*/}
                 <div className="message-content">
                   <p>{message.content}</p>
 
@@ -118,9 +119,10 @@ function App() {
                             <img
                               src={
                                 movie.poster_path
-                                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        
+                                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
                                   : `https://via.placeholder.com/300x450/374151/ffffff?text=${encodeURIComponent(movie.title)}`
-                              }
+                              } 
                               alt={movie.title}
                             />
                             <div className="rating">
@@ -198,7 +200,7 @@ function App() {
           <input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)} //update on every keystroke
             placeholder="What kind of movies are you in the mood for? (e.g., 'action movies with superheroes', 'romantic comedies', 'sci-fi thrillers')"
             disabled={isLoading}
             className="message-input"
