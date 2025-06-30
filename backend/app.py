@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.ratelimiter import RateLimiter
 
 origins = ["https://localhost",
-           "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://filmprescribewebsite.onrender.com"]
+           "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://filmprescribewebsite.onrender.com", "http://localhost:5173"]
 app = FastAPI()
 #frontend sends a preflight security check OPTIONS request need to 
 app.add_middleware(
