@@ -7,12 +7,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.ratelimiter import RateLimiter
 
 origins = ["https://localhost",
-           "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000"]
+           "https://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://filmprescribewebsite.onrender.com"]
 app = FastAPI()
 #frontend sends a preflight security check OPTIONS request need to 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"],  # Added Vite default port
+    allow_origins= origins,  # Added Vite default port
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
