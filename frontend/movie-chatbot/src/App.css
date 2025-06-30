@@ -57,8 +57,8 @@ body {
   border-radius: 16px;
   padding: 1rem; /* Reduced padding */
   margin-bottom: 1rem;
-  max-height: 475px;
-  min-height: 475px;
+  max-height: 550px;
+  min-height: 550px;
   overflow-y: auto;
   width: 100%;
   box-sizing: border-box;
